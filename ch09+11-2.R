@@ -15,20 +15,22 @@ korpop1 <- rename(korpop1,
                   name = 행정구역별_읍면동)
 str(changeCode(kormap1))
 
-ggChoropleth(data = korpop1,
-             aes(fill = pop,
-                 map_id = code,
-                 tooltip = name),
-             map = kormap1,
-             interactive = T)
+ggChoropleth(data = korpop1,       
+             aes(fill = pop,       
+                 map_id = code,    
+                 tooltip = name),  
+             map = kormap1,        
+             interactive = T)        
 
 install.packages("mapproj")
-library(mapproj)
+library(mapproj) 
 
 kormap1 %>% distinct(code, name1)
 
+
+
 list_region <- data.frame(code_region = c(1:7),
-                          map_code= c(11, 31, 38, 37, 34, 33, 35),
+                          map_code = c(11, 31, 38, 37, 34, 33, 35),
                           region = c("서울",
                                      "수도권(인천/경기)",
                                      "부산/경남/울산",
@@ -39,8 +41,8 @@ list_region <- data.frame(code_region = c(1:7),
 
 welfare <- left_join(welfare, list_region, id = "code_region")
 
+
 region_ageg <- welfare %>%
-  filter(ageg == "old") %>%
   group_by(map_code, ageg) %>%
   summarise(n = n()) %>%
   mutate(tot_group = sum(n)) %>%
@@ -48,25 +50,24 @@ region_ageg <- welfare %>%
 
 region_ageg
 
-region_ageg_old <- region_ageg %>%
+region_ageg_old <- region_ageg %>% 
   filter(ageg == "old")
 
 region_ageg_old
 
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(23, "old", 1109, 3711, 29, 9)
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(32, "old", 555, 1257, 44, 2)
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(21, "old", 1124, 2785, 40, 4)
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(26, "old", 1124, 2785, 40, 4)
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(36, "old", 1133, 2922, 42, 2)
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(24, "old", 1133, 2922, 42, 2)
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(39, "old", 1133, 2922, 42, 2)
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(25, "old", 527, 1467, 35, 9)
-region_ageg_old[nrow(region_ageg_old) + 1,] = list(22, "old", 928, 2036, 45, 6)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(23, "old", 1109, 3711, 29.9)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(32, "old", 555, 1257, 44.2)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(21, "old", 1124, 2785, 40.4)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(26, "old", 1124, 2785, 40.4)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(36, "old", 1233, 2922, 42.2)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(24, "old", 1233, 2922, 42.2)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(39, "old", 1233, 2922, 42.2)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(25, "old", 527, 1467, 35.9)
+region_ageg_old[nrow(region_ageg_old) + 1,] = list(22, "old", 928, 2036, 45.6)
 
-
-ggChoropleth(data = region_ageg_old, 
-             aes(fill = pct, 
-                 map_id = map_code, 
-                 tooltip = name), 
-             map = kormap1, 
-             interactive = T)
+ggChoropleth(data = region_ageg_old,       
+             aes(fill = pct,       
+                 map_id = map_code,    
+                 tooltip = name),  
+             map = kormap1,        
+             interactive = T)        
