@@ -22,3 +22,4 @@ printcp(ptree)
 plotcp(ptree)
 rpartpred<-predict(ptree, test, type='class')
 confusionMatrix(rpartpred, test$Personal.Loan)
+
