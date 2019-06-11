@@ -1,0 +1,22 @@
+install.packages("rpart")
+library(rpart)
+bank.df <- read.csv("UniversalBank.csv")
+bank.df <- bank.df[ , -c(1, 5)]
+install.packages("caret")
+library(caret)
+set.seed(1000)
+str(bank.df)
+head(bank.df)
+intrain<-createDataPartition(y=bank.df$Personal.Loan, p=0.6, list=FALSE)
+train<-bank.df[intrain, ]
+teat<-bank.df[-intrain, ]
+A<-rpart(Personal.Loan~., data=bank.df, method = "class")
+plot(A)
+text(A)
+printcp(A)
+plotcp(A)
+B<-prune(A, cp=A$cptable[which.min(A$cptable[,"xerror"]), "CP"])
+plot(B)
+text(B)
+AB<-predict(B, test, type='class')
+confusionMatrix(AB, test$Personal.Loan) 
